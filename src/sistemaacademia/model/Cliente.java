@@ -19,8 +19,8 @@ public class Cliente implements Serializable {
     /**
      * @return the nome
      */
-    Cliente(){}
-    Cliente(String nome, Date dataNascimento, String cpf){
+    public Cliente(){}
+    public Cliente(String nome, Date dataNascimento, String cpf){
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;

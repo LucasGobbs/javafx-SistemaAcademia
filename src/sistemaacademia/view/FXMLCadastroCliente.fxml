@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaacademia.controller.FXMLCadastroClienteController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaacademia.controller.FXMLCadastroClienteController">
    <children>
-      <TableView prefHeight="315.0" prefWidth="600.0">
+      <TableView fx:id="tableViewCliente" layoutX="283.0" layoutY="96.0" prefHeight="226.0" prefWidth="296.0">
         <columns>
-          <TableColumn prefWidth="165.0" text="Nome" />
-          <TableColumn minWidth="0.0" prefWidth="150.0" text="CPF" />
-            <TableColumn minWidth="0.0" prefWidth="161.0" text="Telefone" />
+          <TableColumn fx:id="tableColumnClienteNome" prefWidth="96.0" text="Nome" />
+          <TableColumn fx:id="tableColumnClienteCpf" minWidth="0.0" prefWidth="92.0" text="CPF" />
+            <TableColumn fx:id="tableColumnClienteDataNascimento" minWidth="0.0" prefWidth="107.0" text="Nascimento(Data)" />
         </columns>
       </TableView>
-      <Button layoutX="309.0" layoutY="348.0" mnemonicParsing="false" text="Inserir" />
-      <Button layoutX="377.0" layoutY="348.0" mnemonicParsing="false" text="Alterar" />
-      <Button layoutX="442.0" layoutY="348.0" mnemonicParsing="false" text="Remover" />
-      <Button layoutX="520.0" layoutY="348.0" mnemonicParsing="false" text="Buscar" />
+      <Button fx:id="buttonInserir" layoutX="283.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonInserir" text="Inserir" />
+      <Button fx:id="buttonAlterar" layoutX="448.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonAlterar" text="Alterar" />
+      <Button fx:id="buttonRemover" layoutX="515.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonRemover" text="Remover" />
+      <Button fx:id="buttonBuscar" layoutX="362.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonBuscar" text="Buscar" />
+      <TextField fx:id="textFieldNome" layoutX="112.0" layoutY="96.0" prefHeight="25.0" prefWidth="152.0" />
+      <TextField fx:id="textFieldCpf" layoutX="113.0" layoutY="154.0" prefHeight="25.0" prefWidth="152.0" />
+      <Text layoutX="43.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" wrappingWidth="33.619140625" />
+      <Text layoutX="43.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cpf" wrappingWidth="33.619140625" />
+      <Text layoutX="36.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data de Nascimento" wrappingWidth="82.619140625" />
+      <DatePicker fx:id="datePickerDataNascimento" layoutX="119.0" layoutY="215.0" prefHeight="25.0" prefWidth="152.0" />
+      <Button layoutX="218.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleButtonLimpar" text="Limpar" />
    </children>
 </AnchorPane>

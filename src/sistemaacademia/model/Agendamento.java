@@ -23,8 +23,8 @@ public class Agendamento implements Serializable {
     /**
      * @return the dataInicio
      */
-    Agendamento(){}
-    Agendamento(Date dataInicio, Time horario, Treinador treinador, Cliente cliente, float valor){
+    public Agendamento(){}
+    public Agendamento(Date dataInicio, Time horario, Treinador treinador, Cliente cliente, float valor){
         this.dataInicio = dataInicio;
         this.horario = horario;
         this.treinador = treinador;

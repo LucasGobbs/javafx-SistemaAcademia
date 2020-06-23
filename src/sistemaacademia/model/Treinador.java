@@ -22,8 +22,8 @@ public class Treinador implements Serializable{
     /**
      * @return the nome
      */
-    Treinador(){}
-    Treinador(String nome,Date dataNascimento,String cpf, int cargaHoraria, float valorPorHora){
+    public Treinador(){}
+    public Treinador(String nome,Date dataNascimento,String cpf, int cargaHoraria, float valorPorHora){
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
