@@ -82,11 +82,7 @@ public class FXMLCadastroClienteController implements Initializable {
     private final Connection connection = database.conectar();
     private final ClienteDAO clienteDAO = new ClienteDAO();
     
-    public void handleButtonLimpar(){
-        textFieldNome.setText("");
-        textFieldCpf.setText("");
-        datePickerDataNascimento.setValue(LocalDate.now());
-    }
+    
     public Cliente createCliente(){
         return new Cliente(0,textFieldNome.getText(),Date.valueOf(datePickerDataNascimento.getValue()),textFieldCpf.getText());
     }
@@ -104,15 +100,17 @@ public class FXMLCadastroClienteController implements Initializable {
     public void handleButtonBuscar(){
         
     }
-    private Cliente getClienteSelecionado(){
-        return tableViewCliente.getSelectionModel().getSelectedItem();
-
-    }
+    
     public void handleButtonRemover(){
         Cliente selecionado = this.getClienteSelecionado();
         clienteDAO.remover(selecionado);
         refreshTableViewCliente();
                    
+    }
+    public void handleButtonLimpar(){
+        textFieldNome.setText("");
+        textFieldCpf.setText("");
+        datePickerDataNascimento.setValue(LocalDate.now());
     }
     
     private void handleTableViewSelection(Cliente selecionado){
@@ -122,8 +120,9 @@ public class FXMLCadastroClienteController implements Initializable {
             this.textFieldCpf.setText(selecionado.getCpf());
             this.datePickerDataNascimento.setValue(selecionado.getDataNascimento().toLocalDate());
         }
-
-        
+    }
+    private Cliente getClienteSelecionado(){
+        return tableViewCliente.getSelectionModel().getSelectedItem();
     }
     private void refreshTableViewCliente(){
         listClientes = clienteDAO.listar();
