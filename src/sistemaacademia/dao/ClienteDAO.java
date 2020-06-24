@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemaacademia.dao;
 
 import java.sql.Connection;
 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++ TIRAR
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,6 +42,7 @@ public class ClienteDAO {
         }
         return retorno;
     }
+    
     public boolean inserir(Cliente cliente){
         String sql = "INSERT INTO clientes(nome, nascimento, cpf) VALUES(?,?,?)";
         try {
@@ -62,9 +57,11 @@ public class ClienteDAO {
             return false;
         }
     }
+    
     public void remover(Cliente cliente){
         listCliente.remove(cliente);  
     }
+    
     public void alterar(Cliente cliente_antes,Cliente Cliente_depois ){
         listCliente.get(listCliente.indexOf(cliente_antes)).setNome(Cliente_depois.getNome());
         listCliente.get(listCliente.indexOf(cliente_antes)).setCpf(Cliente_depois.getCpf());
