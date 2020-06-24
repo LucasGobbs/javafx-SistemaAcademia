@@ -6,6 +6,9 @@
 package sistemaacademia.dao;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import sistemaacademia.model.Agendamento;
 
 /**
  *
@@ -20,6 +23,13 @@ public class AgendamentoDAO {
 
     public void setConnection(Connection connection) {
         this.connection = connection;
+    }
+    private List<Agendamento> listAgendamento = new ArrayList<>();
+    public List<Agendamento> listar(){
+        return listAgendamento;
+    }
+    public void inserir(Agendamento agendamento){
+        listAgendamento.add(agendamento);
     }
 }
 /*

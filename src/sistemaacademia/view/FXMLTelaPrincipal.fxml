@@ -22,16 +22,16 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Graficos">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#handleMenuItemGraficos" text="Graficos" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Relatorios">
                <items>
-                  <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleMenuItemRelatorios" text="Relatorios" />
                </items>
             </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="anchorPane" prefHeight="416.0" prefWidth="633.0" />
+      <AnchorPane fx:id="anchorPane" prefHeight="487.0" prefWidth="616.0" />
    </children>
 </VBox>

@@ -6,7 +6,10 @@
 package sistemaacademia.controller;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,9 +19,17 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import sistemaacademia.dao.AgendamentoDAO;
+import sistemaacademia.dao.ClienteDAO;
+import sistemaacademia.dao.TreinadorDAO;
+import sistemaacademia.database.Database;
+import sistemaacademia.database.DatabaseFactory;
+import sistemaacademia.model.Agendamento;
 import sistemaacademia.model.Cliente;
 import sistemaacademia.model.Treinador;
 
@@ -32,6 +43,21 @@ public class FXMLAgendamentoController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    // Tableview agendamento
+    @FXML
+    private TableView<Agendamento> tableViewAgendamento;
+    @FXML
+    private TableColumn<Agendamento,String> tableViewAgendamentoCliente;
+    @FXML
+    private TableColumn<Agendamento,String> tableViewAgendamentoTreinador;
+    @FXML
+    private TableColumn<Agendamento, Date> tableViewAgendamentoData;
+    @FXML
+    private TableColumn<Agendamento, Time> tableViewAgendamentoTime;
+    private List<Agendamento> listAgendamento = new ArrayList<>();
+    private ObservableList<Agendamento> olistAgendamento;
+    
+    
     // Tableview Treinador ------------------
     @FXML
     private TableView<Treinador> tableViewTreinador;
@@ -56,15 +82,38 @@ public class FXMLAgendamentoController implements Initializable {
     private List<String> listHorario = new ArrayList<>();
     private ObservableList<String> olistHorario;
     
+    // Textfields
+    @FXML
+    private TextField textFieldCargaHoraria;
+    @FXML
+    private TextField textFieldValor;
+    
+    @FXML
+    private DatePicker datePickerDataInicio;
+    
+    private Treinador treinadorSelecionado;
+    private final Database database = DatabaseFactory.getDatabase("postgresql");
+    private final Connection connection = database.conectar();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
+    private final TreinadorDAO treinadorDAO = new TreinadorDAO();
+    private final AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
+    
+    public void handleButtonCalcular(){
+        int cargaHoraria = treinadorDAO.getCargaHoraria(treinadorSelecionado);
+        calcularValor();
+    }
     public void calcularCargaHoraria(Treinador selecionado){
-        System.out.println("Quero a carga horaria do "+selecionado.toString());
+        treinadorSelecionado = selecionado;
+        int cargaHoraria = treinadorDAO.getCargaHoraria(selecionado);
+        textFieldCargaHoraria.setText(String.format("%d horas",cargaHoraria));
+        textFieldValor.setText("");
     }
     public void calcularValor(){
-        
+        float valor = treinadorDAO.getvalorPorMes(treinadorSelecionado);
+        textFieldValor.setText(String.format("%.2f reais",valor));
     }
     private void carregarComboBoxCliente(){
-        listClientes.add(new Cliente(0,"aaaa",new Date(2000,05,28),"111.111"));
-        listClientes.add(new Cliente(0,"bbbb",new Date(2001,05,28),"222.222"));
+        listClientes = clienteDAO.listar();
         olistClientes = FXCollections.observableArrayList(listClientes);
       
         comboBoxClientes.setItems(olistClientes);
@@ -89,24 +138,53 @@ public class FXMLAgendamentoController implements Initializable {
         listHorario.add("22:00");
         
         olistHorario = FXCollections.observableArrayList(listHorario);
-        if(olistHorario == null){
-            System.out.println("A");
-        }
-        if(comboBoxHorario == null){
-            System.out.println("B");
-        }
+       
         comboBoxHorario.setItems(olistHorario);
     }
     private int parseHorario(){
-        String teste = "5:30";
+        String horario = comboBoxHorario.getSelectionModel().getSelectedItem();
+        return Integer.parseInt(horario.split(":")[0]);
+    }
+    public void handleButtonInserirAgendamento() throws Exception { /// MUDAR PARA SQLException +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Cliente clienteSelecionado = comboBoxClientes.getSelectionModel().getSelectedItem();
+        Date dataInicio = Date.valueOf(datePickerDataInicio.getValue());
+        Time horario = new Time(parseHorario(),0,0);
+        handleButtonCalcular();
+        float valor = treinadorDAO.getvalorPorMes(treinadorSelecionado);
+        if(treinadorDAO.getCargaHoraria(treinadorSelecionado) > 0){
+            if(treinadorDAO.estaDisponivel(treinadorSelecionado, dataInicio, horario)){
+                Agendamento agendamento = new Agendamento(0,dataInicio,horario,treinadorSelecionado,clienteSelecionado,valor);
+                connection.setAutoCommit(false);
+                try{
+                    treinadorDAO.diminuirCargaHoraria(treinadorSelecionado, 1);
+                    agendamentoDAO.inserir(agendamento);
+                }catch(Exception e){ /// MUDAR PARA SQLException +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    connection.rollback();
+
+                }
+                connection.setAutoCommit(true);
+            }else{
+                //botar erro de disponibilidade aki
+            }
+        } else {
+            //Botar erro de carga horaria aki
+            
+        }
         
-        System.out.println(teste.split(":")[0]);
-        return 1;
+        calcularCargaHoraria(treinadorSelecionado);
+  
+        
+        this.refreshTableViewAgendamento();
+    }
+    private void refreshTableViewAgendamento(){
+        listAgendamento = agendamentoDAO.listar();
+        olistAgendamento = FXCollections.observableArrayList(listAgendamento);
+        tableViewAgendamento.setItems(olistAgendamento);
+        tableViewAgendamento.refresh();
     }
     private void iniciarTableViewTreinador(){
         tableColumnTreinadorNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        listTreinadores.add(new Treinador(0,"Lucas",new Date(2000,3,20),"111.111",10,100));
-        listTreinadores.add(new Treinador(0,"Elian",new Date(1000,3,20),"111.222",10,100));
+        listTreinadores = treinadorDAO.listar();
         olistTreinadores = FXCollections.observableArrayList(listTreinadores);
         
         tableViewTreinador.setItems(olistTreinadores);
@@ -116,13 +194,29 @@ public class FXMLAgendamentoController implements Initializable {
 			   .addListener((observable, oldValue, newValue)  
 			    ->calcularCargaHoraria(newValue));  //
     }
+    private void iniciarTableViewAgendamento(){
+        tableViewAgendamentoCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
+
+        tableViewAgendamentoTreinador.setCellValueFactory(new PropertyValueFactory<>("treinador"));
+
+        tableViewAgendamentoData.setCellValueFactory(new PropertyValueFactory<>("dataInicio"));
+
+        tableViewAgendamentoTime.setCellValueFactory(new PropertyValueFactory<>("horario"));
+        
+        this.refreshTableViewAgendamento();
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        clienteDAO.setConnection(connection);
+        treinadorDAO.setConnection(connection);
+        agendamentoDAO.setConnection(connection);
+        
         this.iniciarTableViewTreinador();
+        this.iniciarTableViewAgendamento();
         this.carregarComboBoxCliente();
         this.carregarComboBoxHorario();
-        this.parseHorario();
+        //this.parseHorario();
     }    
     
 }

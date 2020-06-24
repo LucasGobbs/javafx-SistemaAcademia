@@ -35,6 +35,14 @@ public class FXMLTelaPrincipalController implements Initializable {
         AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/sistemaacademia/view/FXMLAgendamento.fxml"));
         anchorPane.getChildren().setAll(a);
     }
+    public void handleMenuItemGraficos() throws IOException{
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/sistemaacademia/view/FXMLGraficos.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
+    public void handleMenuItemRelatorios() throws IOException{
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/sistemaacademia/view/FXMLRelatorios.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

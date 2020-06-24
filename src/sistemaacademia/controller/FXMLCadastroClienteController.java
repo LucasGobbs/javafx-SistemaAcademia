@@ -6,6 +6,7 @@
 package sistemaacademia.controller;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import sistemaacademia.dao.ClienteDAO;
+import sistemaacademia.database.Database;
+import sistemaacademia.database.DatabaseFactory;
 import sistemaacademia.model.Cliente;
 
 /**
@@ -74,23 +78,27 @@ public class FXMLCadastroClienteController implements Initializable {
     List<Cliente> listClientes = new ArrayList<>();
     ObservableList<Cliente> olistClientes;
     
+    private final Database database = DatabaseFactory.getDatabase("postgresql");
+    private final Connection connection = database.conectar();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
     
     public void handleButtonLimpar(){
         textFieldNome.setText("");
         textFieldCpf.setText("");
         datePickerDataNascimento.setValue(LocalDate.now());
     }
+    public Cliente createCliente(){
+        return new Cliente(0,textFieldNome.getText(),Date.valueOf(datePickerDataNascimento.getValue()),textFieldCpf.getText());
+    }
     public void handleButtonInserir(){
-        Cliente novo = new Cliente(0,textFieldNome.getText(),Date.valueOf(datePickerDataNascimento.getValue()),textFieldCpf.getText());
-        olistClientes.add(novo);
+        clienteDAO.inserir(createCliente());
+        refreshTableViewCliente();
     }
     public void handleButtonAlterar(){
         Cliente selecionado = this.getClienteSelecionado();
         if(selecionado != null){
-            olistClientes.get(olistClientes.indexOf(selecionado)).setNome(textFieldNome.getText());
-            olistClientes.get(olistClientes.indexOf(selecionado)).setCpf(textFieldCpf.getText());
-            olistClientes.get(olistClientes.indexOf(selecionado)).setDataNascimento(Date.valueOf(datePickerDataNascimento.getValue()));
-            tableViewCliente.refresh();
+            clienteDAO.alterar(selecionado, createCliente());
+            refreshTableViewCliente();
         }
     }
     public void handleButtonBuscar(){
@@ -102,9 +110,8 @@ public class FXMLCadastroClienteController implements Initializable {
     }
     public void handleButtonRemover(){
         Cliente selecionado = this.getClienteSelecionado();
-        if(selecionado != null){
-            olistClientes.remove(selecionado);  
-        }
+        clienteDAO.remover(selecionado);
+        refreshTableViewCliente();
                    
     }
     
@@ -118,15 +125,18 @@ public class FXMLCadastroClienteController implements Initializable {
 
         
     }
+    private void refreshTableViewCliente(){
+        listClientes = clienteDAO.listar();
+        olistClientes = FXCollections.observableArrayList(listClientes);
+        tableViewCliente.setItems(olistClientes);
+        tableViewCliente.refresh();
+    }
     private void iniciarTableView(){
         tableColumnClienteNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tableColumnClienteCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         tableColumnClienteDataNascimento.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
         
-        listClientes.add(new Cliente(0,"aaaa",new Date(2000,05,28),"111.111"));
-        listClientes.add(new Cliente(0,"bbbb",new Date(2001,05,28),"222.222"));
-        olistClientes = FXCollections.observableArrayList(listClientes);
-        tableViewCliente.setItems(olistClientes);
+        refreshTableViewCliente();
         tableViewCliente.getSelectionModel()  
 			.selectedItemProperty()  
 			.addListener((observable, oldValue, newValue)  
@@ -135,7 +145,7 @@ public class FXMLCadastroClienteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+        clienteDAO.setConnection(connection);
         this.iniciarTableView();
     }    
     
