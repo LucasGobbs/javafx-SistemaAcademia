@@ -14,6 +14,7 @@ import java.sql.Time;
  * @author llcos_000
  */
 public class Agendamento implements Serializable {
+    private int id;
     private Date dataInicio;
     private Time horario;
     private Treinador treinador;
@@ -24,12 +25,20 @@ public class Agendamento implements Serializable {
      * @return the dataInicio
      */
     public Agendamento(){}
-    public Agendamento(Date dataInicio, Time horario, Treinador treinador, Cliente cliente, float valor){
+    public Agendamento(int id, Date dataInicio, Time horario, Treinador treinador, Cliente cliente, float valor){
+        this.id = id;
         this.dataInicio = dataInicio;
         this.horario = horario;
         this.treinador = treinador;
         this.cliente = cliente;
         this.valor = valor;
+    }
+    
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return this.id;
     }
     public Date getDataInicio() {
         return dataInicio;

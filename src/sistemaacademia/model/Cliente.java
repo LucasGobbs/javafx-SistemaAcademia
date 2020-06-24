@@ -12,6 +12,7 @@ package sistemaacademia.model;
 import java.io.Serializable;
 import java.sql.Date;
 public class Cliente implements Serializable {
+   private int id;
    private String nome;
    private Date dataNascimento;
    private String cpf;
@@ -20,11 +21,19 @@ public class Cliente implements Serializable {
      * @return the nome
      */
     public Cliente(){}
-    public Cliente(String nome, Date dataNascimento, String cpf){
+    public Cliente(int id, String nome, Date dataNascimento, String cpf){
+        this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
     }
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return this.id;
+    }
+    
     public String getNome() {
         return nome;
     }

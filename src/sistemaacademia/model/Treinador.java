@@ -13,6 +13,7 @@ import java.sql.Date;
  */
 import java.io.Serializable;
 public class Treinador implements Serializable{
+    private int id;
     private String nome;
     private Date dataNascimento;
     private String cpf;
@@ -23,12 +24,21 @@ public class Treinador implements Serializable{
      * @return the nome
      */
     public Treinador(){}
-    public Treinador(String nome,Date dataNascimento,String cpf, int cargaHoraria, float valorPorHora){
+    public Treinador(int id, String nome,Date dataNascimento,String cpf, int cargaHoraria, float valorPorHora){
+        this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
         this.cargaHoraria = cargaHoraria;
         this.valorPorHora = valorPorHora;
+    }
+    
+    
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return this.id;
     }
     public String getNome() {
         return nome;

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaacademia.controller.FXMLTelaPrincipalController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaacademia.controller.FXMLTelaPrincipalController">
    <children>
       <MenuBar>
         <menus>
@@ -15,9 +15,9 @@
               <MenuItem mnemonicParsing="false" onAction="#handleMenuItemCadastroCliente" text="Cliente" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Agendamento">
+          <Menu mnemonicParsing="false" text="Processos">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#handleMenuItemAgendamento" text="Agendamento" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Graficos">
@@ -32,6 +32,6 @@
             </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="anchorPane" prefHeight="375.0" prefWidth="600.0" />
+      <AnchorPane fx:id="anchorPane" prefHeight="416.0" prefWidth="633.0" />
    </children>
 </VBox>

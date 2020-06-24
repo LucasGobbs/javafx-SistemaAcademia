@@ -30,7 +30,8 @@ import sistemaacademia.model.Cliente;
  * @author llcos_000
  */
 public class FXMLCadastroClienteController implements Initializable {
-
+    
+    // TableView ------------------
     @FXML
     private TableView<Cliente> tableViewCliente;
 
@@ -42,6 +43,7 @@ public class FXMLCadastroClienteController implements Initializable {
     
     @FXML
     private TableColumn<Cliente, Date> tableColumnClienteDataNascimento;
+    // ---------------------------
     
     @FXML
     private TextField textFieldNome;
@@ -49,6 +51,11 @@ public class FXMLCadastroClienteController implements Initializable {
     @FXML
     private TextField textFieldCpf;
     
+    
+    @FXML
+    private DatePicker datePickerDataNascimento;
+    
+    // Buttons -------------------------
     @FXML
     private Button buttonInserir;
     
@@ -60,9 +67,9 @@ public class FXMLCadastroClienteController implements Initializable {
     
     @FXML
     private Button buttonRemover;
+    // --------------------------------
     
-    @FXML
-    private DatePicker datePickerDataNascimento;
+    
     
     List<Cliente> listClientes = new ArrayList<>();
     ObservableList<Cliente> olistClientes;
@@ -74,7 +81,7 @@ public class FXMLCadastroClienteController implements Initializable {
         datePickerDataNascimento.setValue(LocalDate.now());
     }
     public void handleButtonInserir(){
-        Cliente novo = new Cliente(textFieldNome.getText(),Date.valueOf(datePickerDataNascimento.getValue()),textFieldCpf.getText());
+        Cliente novo = new Cliente(0,textFieldNome.getText(),Date.valueOf(datePickerDataNascimento.getValue()),textFieldCpf.getText());
         olistClientes.add(novo);
     }
     public void handleButtonAlterar(){
@@ -116,8 +123,8 @@ public class FXMLCadastroClienteController implements Initializable {
         tableColumnClienteCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
         tableColumnClienteDataNascimento.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
         
-        listClientes.add(new Cliente("aaaa",new Date(2000,05,28),"111.111"));
-        listClientes.add(new Cliente("bbbb",new Date(2001,05,28),"222.222"));
+        listClientes.add(new Cliente(0,"aaaa",new Date(2000,05,28),"111.111"));
+        listClientes.add(new Cliente(0,"bbbb",new Date(2001,05,28),"222.222"));
         olistClientes = FXCollections.observableArrayList(listClientes);
         tableViewCliente.setItems(olistClientes);
         tableViewCliente.getSelectionModel()  
