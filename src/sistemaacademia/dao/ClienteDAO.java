@@ -58,14 +58,53 @@ public class ClienteDAO {
         }
     }
     
-    public void remover(Cliente cliente){
-        listCliente.remove(cliente);  
+    public boolean remover(Cliente cliente){
+        String sql = "DELETE FROM clientes WHERE id=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, cliente.getId());
+            stmt.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
     
-    public void alterar(Cliente cliente_antes,Cliente Cliente_depois ){
-        listCliente.get(listCliente.indexOf(cliente_antes)).setNome(Cliente_depois.getNome());
-        listCliente.get(listCliente.indexOf(cliente_antes)).setCpf(Cliente_depois.getCpf());
-        listCliente.get(listCliente.indexOf(cliente_antes)).setDataNascimento(Cliente_depois.getDataNascimento());
+    public boolean alterar(Cliente cliente){
+        String sql = "UPDATE clientes SET nome=?, nascimento=?, cpf=? WHERE id=?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, cliente.getNome());
+            stmt.setDate(2, cliente.getDataNascimento());
+            stmt.setString(3, cliente.getCpf());
+            stmt.setInt(4, cliente.getId());
+            stmt.execute();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public Cliente buscar(Cliente cliente) {
+        String sql = "SELECT * FROM clientes WHERE id=?";
+        Cliente retorno = new Cliente();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, cliente.getId());
+            ResultSet resultado = stmt.executeQuery();
+            if (resultado.next()) {
+                cliente.setId(resultado.getInt("id"));
+                cliente.setNome(resultado.getString("nome"));
+                cliente.setDataNascimento(resultado.getDate("nascimento"));
+                cliente.setCpf(resultado.getString("cpf"));
+                retorno = cliente;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
     }
 }
 /*
