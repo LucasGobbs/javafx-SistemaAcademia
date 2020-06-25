@@ -16,10 +16,10 @@ O banco de dados conta com 3 simples tabelas (Cliente, Treinador, Agendamento)
 ### Tabelas
 |Cliente  |Treinador  | Agendamento  |
 |--|--|--|
-| id  | id  | id  |
-| nome  | nome  | Data de inicio  |
-| cpf   | cpf  | Horário  |
-| data de nascimento  | data de nascimento | Treinador Responsável |
+| Id  | Id  | Id  |
+| Nome  | Nome  | Data de inicio  |
+| Cpf   | Cpf  | Horário  |
+| Data de nascimento  | Data de nascimento | Treinador Responsável |
 |   | Carga Horaria Máxima | Cliente  |
 |   | Valor por mês | Valor  |
 
