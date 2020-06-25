@@ -31,7 +31,7 @@ Esta regra existe para que todos os treinadores possam ter uma media quantidade 
 
  2. O valor do agendamento é calculado pela forma {Formula}
 
-Explicação da formula foda
+Explicação da formula
 
 
 ## Cadastro de Clientes
