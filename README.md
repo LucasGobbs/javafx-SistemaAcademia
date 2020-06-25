@@ -38,4 +38,7 @@ Explicação da formula
 
 ## Processo de Agendamento
 
-## ScreenShots
+## Graficos
+
+## Relatórios
+
