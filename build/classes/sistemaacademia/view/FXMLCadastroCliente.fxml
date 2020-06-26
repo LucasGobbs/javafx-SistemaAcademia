@@ -17,10 +17,9 @@
             <TableColumn fx:id="tableColumnClienteDataNascimento" minWidth="0.0" prefWidth="107.0" text="Nascimento(Data)" />
         </columns>
       </TableView>
-      <Button fx:id="buttonInserir" layoutX="283.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonInserir" text="Inserir" />
+      <Button fx:id="buttonInserir" layoutX="382.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonInserir" text="Inserir" />
       <Button fx:id="buttonAlterar" layoutX="448.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonAlterar" text="Alterar" />
       <Button fx:id="buttonRemover" layoutX="515.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonRemover" text="Remover" />
-      <Button fx:id="buttonBuscar" layoutX="362.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleButtonBuscar" text="Buscar" />
       <TextField fx:id="textFieldNome" layoutX="112.0" layoutY="96.0" prefHeight="25.0" prefWidth="152.0" />
       <TextField fx:id="textFieldCpf" layoutX="113.0" layoutY="154.0" prefHeight="25.0" prefWidth="152.0" />
       <Text layoutX="43.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" wrappingWidth="33.619140625" />
