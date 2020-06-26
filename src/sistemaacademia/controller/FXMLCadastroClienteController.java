@@ -93,7 +93,9 @@ public class FXMLCadastroClienteController implements Initializable {
     public void handleButtonAlterar(){
         Cliente selecionado = this.getClienteSelecionado();
         if(selecionado != null){
-            clienteDAO.alterar(selecionado, createCliente());
+            Cliente alterado = createCliente();
+            alterado.setId(selecionado.getId());
+            clienteDAO.alterar(alterado);
             refreshTableViewCliente();
         }
     }
@@ -144,6 +146,8 @@ public class FXMLCadastroClienteController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+  
+        datePickerDataNascimento.setValue(LocalDate.of(2000,1,1));
         clienteDAO.setConnection(connection);
         this.iniciarTableView();
     }    
