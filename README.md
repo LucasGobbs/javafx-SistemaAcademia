@@ -7,8 +7,8 @@ Grupo:
 ## Objetivo
 Criar um sistema com as tecnologias JavaFx, Postgresql
 ## Contexto
-O trabalho é um fragmento de um sistema para uma academia delivery hipotetica, e seu funcionamento seria basimamente o cliente solicitando um treino com um treinador em determinada data/hora, e o treinador iria para sua casa com equipamentos minimos para o treino.
-O trabalho implementa os casos de uso de CRUD de clientes e agendamento de treinos, alem de geração de gráfico sobre a quantidade de agendamentos de determinador treinador e relatórios sobre os agendamentos.
+O trabalho é um fragmento de um sistema para uma academia em formato delivery, e seu funcionamento seria basicamente o cliente solicitando um treino com um treinador em determinada data/hora, e no dia agendado o treinador iria para sua casa com equipamentos minimos para o treino.
+O trabalho implementa os casos de uso de CRUD de clientes e agendamento de treinos, alem de geração de gráfico sobre a quantidade de agendamentos de determinado treinador e relatórios sobre os agendamentos.
 
 ## Anatomia do Sistema
 O banco de dados conta com 3 simples tabelas (Cliente, Treinador, Agendamento)
@@ -20,8 +20,8 @@ O banco de dados conta com 3 simples tabelas (Cliente, Treinador, Agendamento)
 | Id  | Id  | Id  |
 | Nome  | Nome  | Data de inicio  |
 | Cpf   | Cpf  | Horário  |
-| Data de nascimento  | Data de nascimento | Treinador Responsável |
-|   | Carga Horaria Máxima | Cliente  |
+| Data de nascimento  | Data de nascimento | id do Treinador Responsável |
+|   | Carga Horaria Máxima | id do Cliente  |
 |   | Valor por mês | Valor  |
 
 ## Regras de negocio
