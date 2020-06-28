@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -99,12 +102,28 @@ public class FXMLAgendamentoController implements Initializable {
     private final AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
     
     public void handleButtonCalcular(){
-        int cargaHoraria = treinadorDAO.getCargaHoraria(treinadorSelecionado);
+        Date dataMarcada = Date.valueOf(datePickerDataInicio.getValue());
+        LocalDate InicioMes = dataMarcada.toLocalDate();
+        Month mes = InicioMes.getMonth();
+        int ano = InicioMes.getYear();
+
+
+        LocalDate testeA = LocalDate.of(ano, mes.getValue(), 1);
+        LocalDate testeB = LocalDate.of(ano, mes.getValue(), mes.length(this.isLeapYear(ano)));
+        int cargaHoraria = treinadorDAO.getCargaHoraria(treinadorSelecionado, Date.valueOf(testeA),Date.valueOf(testeB));
         calcularValor();
     }
     public void calcularCargaHoraria(Treinador selecionado){
         treinadorSelecionado = selecionado;
-        int cargaHoraria = treinadorDAO.getCargaHoraria(selecionado);
+        Date dataMarcada = Date.valueOf(datePickerDataInicio.getValue());
+        LocalDate InicioMes = dataMarcada.toLocalDate();
+        Month mes = InicioMes.getMonth();
+        int ano = InicioMes.getYear();
+
+
+        LocalDate testeA = LocalDate.of(ano, mes.getValue(), 1);
+        LocalDate testeB = LocalDate.of(ano, mes.getValue(), mes.length(this.isLeapYear(ano)));
+        int cargaHoraria = treinadorDAO.getCargaHoraria(treinadorSelecionado, Date.valueOf(testeA),Date.valueOf(testeB));
         textFieldCargaHoraria.setText(String.format("%d horas",cargaHoraria));
         textFieldValor.setText("");
     }
@@ -145,16 +164,32 @@ public class FXMLAgendamentoController implements Initializable {
         String horario = comboBoxHorario.getSelectionModel().getSelectedItem();
         return Integer.parseInt(horario.split(":")[0]);
     }
+    public boolean isLeapYear(int year) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        return cal.getActualMaximum(Calendar.DAY_OF_YEAR) > 365;
+    }
     public void handleButtonInserirAgendamento() throws Exception { /// MUDAR PARA SQLException +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Cliente clienteSelecionado = comboBoxClientes.getSelectionModel().getSelectedItem();
-        Date dataInicio = Date.valueOf(datePickerDataInicio.getValue());
+       
+        Date dataMarcada = Date.valueOf(datePickerDataInicio.getValue());
+        LocalDate InicioMes = dataMarcada.toLocalDate();
+        Month mes = InicioMes.getMonth();
+        int ano = InicioMes.getYear();
+
+
+        LocalDate testeA = LocalDate.of(ano, mes.getValue(), 1);
+        LocalDate testeB = LocalDate.of(ano, mes.getValue(), mes.length(this.isLeapYear(ano)));
+        System.out.println("Inicio: "+testeA.toString()+"   Fim: "+testeB.toString());
         Time horario = new Time(parseHorario(),0,0);
         handleButtonCalcular();
         float valor = treinadorDAO.getValorPorMes(treinadorSelecionado);
         System.out.println("Alou");
-        if(treinadorDAO.getCargaHoraria(treinadorSelecionado) > 0){
-            if(!treinadorDAO.estaDisponivel(treinadorSelecionado, dataInicio, horario)){
-                Agendamento agendamento = new Agendamento(0,dataInicio,horario,treinadorSelecionado,clienteSelecionado,valor);
+        
+        //getCargaHoraria(treinador, DataInicio, DataFinal);
+        if(treinadorDAO.getCargaHoraria(treinadorSelecionado, Date.valueOf(testeA),Date.valueOf(testeB)) > 0){
+            if(!treinadorDAO.estaDisponivel(treinadorSelecionado, dataMarcada, horario)){
+                Agendamento agendamento = new Agendamento(0,dataMarcada,horario,treinadorSelecionado,clienteSelecionado,valor);
                 System.out.println(valor);
                 System.out.println(agendamento);
                 System.out.println(agendamentoDAO.inserir(agendamento));

@@ -97,12 +97,14 @@ public class TreinadorDAO {
         return false;
     }
     
-    public int getCargaHoraria(Treinador treinador){
+    public int getCargaHoraria(Treinador treinador, Date dataInicio, Date dataFim){
        //retorna a carga horaria do treinador já subtraida da contidade de agendamento
-        String sql = "SELECT * FROM agendamentos WHERE treinador_id=?";
+        String sql = "SELECT * FROM agendamentos WHERE treinador_id=? AND data_inicio BETWEEN ? AND ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, treinador.getId());
+            stmt.setDate(2, dataInicio);
+            stmt.setDate(3, dataFim);
             ResultSet resultado = stmt.executeQuery();
             int cont = 0;
             while (resultado.next()) {
