@@ -21,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -57,6 +58,9 @@ public class FXMLAgendamentoController implements Initializable {
     private TableColumn<Agendamento, Date> tableViewAgendamentoData;
     @FXML
     private TableColumn<Agendamento, Time> tableViewAgendamentoTime;
+    @FXML
+    private TableColumn<Agendamento, Float> tableViewAgendamentoValor;
+    
     private List<Agendamento> listAgendamento = new ArrayList<>();
     private ObservableList<Agendamento> olistAgendamento;
     
@@ -101,36 +105,126 @@ public class FXMLAgendamentoController implements Initializable {
     private final TreinadorDAO treinadorDAO = new TreinadorDAO();
     private final AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
     
+    public void handleButtonInserirAgendamento() throws Exception { /// MUDAR PARA SQLException +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        if(!this.avaliarInput()){
+            return;
+        }
+        Cliente clienteSelecionado = comboBoxClientes.getSelectionModel().getSelectedItem();
+       
+        Date dataMarcada = Date.valueOf(datePickerDataInicio.getValue());
+        
+        int cargaHorariaDisponivel = this.calcularCargaHorariaNoMes(dataMarcada);
+        float valor = this.calcularValorNoMes(dataMarcada);
+        Time horario = new Time(parseHorario(),0,0);
+        
+        
+        if(cargaHorariaDisponivel > 0){
+            boolean treinadorEstaDisponivel = treinadorDAO.estaDisponivel(treinadorSelecionado, dataMarcada, horario);
+            System.out.println("Esta disponivel" + treinadorEstaDisponivel);
+            
+            if(!treinadorEstaDisponivel){
+                Agendamento agendamento = new Agendamento(0,
+                                                          dataMarcada,
+                                                          horario,
+                                                          treinadorSelecionado,
+                                                          clienteSelecionado,
+                                                          valor);
+                if(!agendamentoDAO.inserir(agendamento)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erro na inserção");
+                    alert.setHeaderText("Houve um erro na inserção do agendamento");
+                    alert.setContentText("por favor tente novamente");
+                    alert.show();
+                } 
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro de disponibilidade");
+                alert.setHeaderText("Treinador não está disponivel neste dia e hora");
+                alert.setContentText("Selecione outro dia ou hora ou mude de treinador");
+                alert.show();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro de carga horaria");
+            alert.setHeaderText("Treinador não tem carga horaria para este mes");
+            alert.setContentText("Selecione outro dia ou hora ou mude de treinador");
+            alert.show();
+        }
+        
+        //calcularCargaHoraria(treinadorSelecionado);
+  
+        this.handleButtonCalcular();
+        this.refreshTableViewAgendamento();
+    }
+    public boolean avaliarInput(){
+        String errorMessage = "";
+
+        if (comboBoxClientes.getSelectionModel().getSelectedItem() == null) {
+            errorMessage += "Cliente inválido!\n";
+        }
+        if (comboBoxHorario.getSelectionModel().getSelectedItem() == null) {
+            errorMessage += "Horario inválido!\n";
+        }
+        if (datePickerDataInicio.getValue() == null) {
+            errorMessage += "Data inválida!\n";
+        }
+        if (treinadorSelecionado == null){
+            errorMessage += "treinador inválido!\n";
+        }
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Mostrando a mensagem de erro
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro no cadastro");
+            alert.setHeaderText("Campos inválidos, por favor, corrija...");
+            alert.setContentText(errorMessage);
+            alert.show();
+            return false;
+        }
+    }
     public void handleButtonCalcular(){
+        if(!this.avaliarInput()){
+            return;
+        }
         Date dataMarcada = Date.valueOf(datePickerDataInicio.getValue());
-        LocalDate InicioMes = dataMarcada.toLocalDate();
-        Month mes = InicioMes.getMonth();
-        int ano = InicioMes.getYear();
-
-
-        LocalDate testeA = LocalDate.of(ano, mes.getValue(), 1);
-        LocalDate testeB = LocalDate.of(ano, mes.getValue(), mes.length(this.isLeapYear(ano)));
-        int cargaHoraria = treinadorDAO.getCargaHoraria(treinadorSelecionado, Date.valueOf(testeA),Date.valueOf(testeB));
-        calcularValor();
-    }
-    public void calcularCargaHoraria(Treinador selecionado){
-        treinadorSelecionado = selecionado;
-        Date dataMarcada = Date.valueOf(datePickerDataInicio.getValue());
-        LocalDate InicioMes = dataMarcada.toLocalDate();
-        Month mes = InicioMes.getMonth();
-        int ano = InicioMes.getYear();
-
-
-        LocalDate testeA = LocalDate.of(ano, mes.getValue(), 1);
-        LocalDate testeB = LocalDate.of(ano, mes.getValue(), mes.length(this.isLeapYear(ano)));
-        int cargaHoraria = treinadorDAO.getCargaHoraria(treinadorSelecionado, Date.valueOf(testeA),Date.valueOf(testeB));
+                
+        int cargaHoraria = this.calcularCargaHorariaNoMes(dataMarcada);
         textFieldCargaHoraria.setText(String.format("%d horas",cargaHoraria));
-        textFieldValor.setText("");
-    }
-    public void calcularValor(){
-        float valor = treinadorDAO.getValorPorMes(treinadorSelecionado);
+        
+        float valor = calcularValorNoMes(dataMarcada);
         textFieldValor.setText(String.format("%.2f reais",valor));
     }
+    public float calcularValorNoMes(Date dataMarcada){
+        LocalDate dm = dataMarcada.toLocalDate();
+        Month mes = dm.getMonth();
+        int ano = dm.getYear();
+        int inicioMes = 1;
+        int finalMes = mes.length(this.isLeapYear(ano)); // Depende do tamanho do mes e se o ano é bissexto
+        LocalDate inicioMesDate = LocalDate.of(ano, mes.getValue(), inicioMes);
+        LocalDate finalMesDate = LocalDate.of(ano, mes.getValue(), finalMes);
+        
+        float valor = treinadorDAO.getValorPorMes(treinadorSelecionado,
+                                                  Date.valueOf(inicioMesDate),
+                                                  Date.valueOf(finalMesDate));
+        return valor;
+    }
+    public int calcularCargaHorariaNoMes(Date dataMarcada){
+        LocalDate dm = dataMarcada.toLocalDate();
+        Month mes = dm.getMonth();
+        int ano = dm.getYear();
+        int inicioMes = 1;
+        int finalMes = mes.length(this.isLeapYear(ano)); // Depende do tamanho do mes e se o ano é bissexto
+        LocalDate inicioMesDate = LocalDate.of(ano, mes.getValue(), inicioMes);
+        LocalDate finalMesDate = LocalDate.of(ano, mes.getValue(), finalMes);
+        
+        int cargaHoraria = treinadorDAO.getCargaHoraria(treinadorSelecionado, 
+                                                        Date.valueOf(inicioMesDate),
+                                                        Date.valueOf(finalMesDate));
+        return cargaHoraria;
+    }
+ 
+  
     private void carregarComboBoxCliente(){
         listClientes = clienteDAO.listar();
         olistClientes = FXCollections.observableArrayList(listClientes);
@@ -169,53 +263,14 @@ public class FXMLAgendamentoController implements Initializable {
         cal.set(Calendar.YEAR, year);
         return cal.getActualMaximum(Calendar.DAY_OF_YEAR) > 365;
     }
-    public void handleButtonInserirAgendamento() throws Exception { /// MUDAR PARA SQLException +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Cliente clienteSelecionado = comboBoxClientes.getSelectionModel().getSelectedItem();
-       
-        Date dataMarcada = Date.valueOf(datePickerDataInicio.getValue());
-        LocalDate InicioMes = dataMarcada.toLocalDate();
-        Month mes = InicioMes.getMonth();
-        int ano = InicioMes.getYear();
-
-
-        LocalDate testeA = LocalDate.of(ano, mes.getValue(), 1);
-        LocalDate testeB = LocalDate.of(ano, mes.getValue(), mes.length(this.isLeapYear(ano)));
-        System.out.println("Inicio: "+testeA.toString()+"   Fim: "+testeB.toString());
-        Time horario = new Time(parseHorario(),0,0);
-        handleButtonCalcular();
-        float valor = treinadorDAO.getValorPorMes(treinadorSelecionado);
-        System.out.println("Alou");
-        
-        //getCargaHoraria(treinador, DataInicio, DataFinal);
-        if(treinadorDAO.getCargaHoraria(treinadorSelecionado, Date.valueOf(testeA),Date.valueOf(testeB)) > 0){
-            if(!treinadorDAO.estaDisponivel(treinadorSelecionado, dataMarcada, horario)){
-                Agendamento agendamento = new Agendamento(0,dataMarcada,horario,treinadorSelecionado,clienteSelecionado,valor);
-                System.out.println(valor);
-                System.out.println(agendamento);
-                System.out.println(agendamentoDAO.inserir(agendamento));
-                    
-               
-               
-            }else{
-                //botar erro de disponibilidade aki
-                System.out.println("Erro de disponibilidade");
-            }
-        } else {
-            //Botar erro de carga horaria aki
-            System.out.println("Erro de carga horaria");
-        }
-        
-        calcularCargaHoraria(treinadorSelecionado);
-  
-        
-        this.refreshTableViewAgendamento();
-    }
+    
     private void refreshTableViewAgendamento(){
         listAgendamento = agendamentoDAO.listar();
         olistAgendamento = FXCollections.observableArrayList(listAgendamento);
         tableViewAgendamento.setItems(olistAgendamento);
         tableViewAgendamento.refresh();
     }
+
     private void iniciarTableViewTreinador(){
         tableColumnTreinadorNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         listTreinadores = treinadorDAO.listar();
@@ -226,7 +281,7 @@ public class FXMLAgendamentoController implements Initializable {
         tableViewTreinador.getSelectionModel()  
 			   .selectedItemProperty()  
 			   .addListener((observable, oldValue, newValue)  
-			    ->calcularCargaHoraria(newValue));  //
+			    ->{treinadorSelecionado = newValue;});  //
     }
     private void iniciarTableViewAgendamento(){
         tableViewAgendamentoCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
@@ -237,6 +292,7 @@ public class FXMLAgendamentoController implements Initializable {
 
         tableViewAgendamentoTime.setCellValueFactory(new PropertyValueFactory<>("horario"));
         
+        tableViewAgendamentoValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
         this.refreshTableViewAgendamento();
     }
     @Override
@@ -250,7 +306,6 @@ public class FXMLAgendamentoController implements Initializable {
         this.iniciarTableViewAgendamento();
         this.carregarComboBoxCliente();
         this.carregarComboBoxHorario();
-        //this.parseHorario();
     }    
     
 }

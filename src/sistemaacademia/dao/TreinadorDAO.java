@@ -117,18 +117,21 @@ public class TreinadorDAO {
         return 0;
     }
     
-    public float getValorPorMes(Treinador treinador){
+    public float getValorPorMes(Treinador treinador, Date dataInicio, Date dataFim){
         //retorna o valor cobrado por hora do treinador em questão
-        String sql = "SELECT * FROM agendamentos WHERE treinador_id=?";
+        String sql = "SELECT * FROM agendamentos WHERE treinador_id=? AND data_inicio BETWEEN ? AND ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, treinador.getId());
+            stmt.setDate(2, dataInicio);
+            stmt.setDate(3, dataFim);
             ResultSet resultado = stmt.executeQuery();
             int cont = 0;
             while (resultado.next()) {
                 cont++;
             }
-            return treinador.getValorPorHora() * 25 + cont * 10;
+           
+            return treinador.getValorPorHora() + cont * 10;
         } catch (SQLException ex) {
             Logger.getLogger(TreinadorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

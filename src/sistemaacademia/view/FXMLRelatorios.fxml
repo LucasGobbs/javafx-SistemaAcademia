@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="sistemaacademia.controller.FXMLRelatoriosController">
+<AnchorPane id="AnchorPane" prefHeight="458.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaacademia.controller.FXMLRelatoriosController">
    <children>
-      <Text layoutX="268.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Relatorios" />
+      <TableView fx:id="tableViewAgendamento" layoutX="18.0" layoutY="54.0" prefHeight="351.0" prefWidth="574.0">
+        <columns>
+          <TableColumn fx:id="tableViewAgendamentoId" prefWidth="60.0" text="Id" />
+          <TableColumn fx:id="tableViewAgendamentoData" prefWidth="100.0" text="Data" />
+            <TableColumn fx:id="tableViewAgendamentoHorario" prefWidth="89.0" text="Horario" />
+            <TableColumn fx:id="tableViewAgendamentoTreinador" prefWidth="131.0" text="Treinador" />
+            <TableColumn fx:id="tableViewAgendamentoCliente" prefWidth="126.0" text="Cliente" />
+            <TableColumn fx:id="tableViewAgendamentoValor" prefWidth="67.0" text="Valor" />
+        </columns>
+      </TableView>
+      <Button layoutX="530.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleImprimir" text="Imprimir" />
    </children>
 </AnchorPane>

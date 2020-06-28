@@ -11,8 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sistemaacademia.model.Agendamento;
@@ -117,5 +119,37 @@ public class AgendamentoDAO {
             return 0;
         }
     }
+    public Map<String, ArrayList> listarQuantidadeDeAgendamentosPorTreinador(String ano){
+        //retorna lista com todos os treinadores
+        String sql = String.format("SELECT t.nome, extract(month from a.data_inicio)as mes, count(a.id) as quantidade "+
+	"from treinadores as t,agendamentos as a "+
+	"WHERE t.id = a.treinador_id "+
+        "AND extract(year from a.data_inicio) = '%s' "+
+	"GROUP BY t.nome, mes; ", ano);
+        System.out.println(sql);
+        Map<String, ArrayList> retorno = new HashMap();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            //stmt.setString(1, ano);
+            ResultSet resultado = stmt.executeQuery();
+            while (resultado.next()) {
+                ArrayList linha = new ArrayList();
+                // Se n tem a linha
+                if(!retorno.containsKey(resultado.getString("nome"))){
+                    linha.add(resultado.getInt("mes"));
+                    linha.add(resultado.getInt("quantidade"));
+                    retorno.put(resultado.getString("nome"), linha);        
+                } else {
+                    ArrayList linhaNova = retorno.get(resultado.getString("nome"));
+                    linhaNova.add(resultado.getInt("mes"));
+                    linhaNova.add(resultado.getInt("quantidade"));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TreinadorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
+    }
+   
     
 }

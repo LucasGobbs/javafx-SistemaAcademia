@@ -17,6 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -85,10 +86,16 @@ public class FXMLCadastroClienteController implements Initializable {
     
 
     public void handleButtonInserir(){
+        if(!this.avaliarInput()){
+            return;
+        }
         clienteDAO.inserir(createCliente());
         refreshTableViewCliente();
     }
     public void handleButtonAlterar(){
+        if(!this.avaliarInput()){
+            return;
+        }
         Cliente selecionado = this.getClienteSelecionado();
         if(selecionado != null){
             Cliente alterado = createCliente();
@@ -98,6 +105,7 @@ public class FXMLCadastroClienteController implements Initializable {
         }
     }
     public void handleButtonRemover(){
+      
         Cliente selecionado = this.getClienteSelecionado();
         clienteDAO.remover(selecionado);
         refreshTableViewCliente();
@@ -147,5 +155,29 @@ public class FXMLCadastroClienteController implements Initializable {
         clienteDAO.setConnection(connection);
         this.iniciarTableView();
     }    
+    public boolean avaliarInput(){
+        String errorMessage = "";
+
+        if (textFieldNome.getText().isEmpty()) {
+            errorMessage += "Digite um nome!\n";
+        }
+        if (textFieldNome.getText().isEmpty()) {
+            errorMessage += "Digite um cpf!\n";
+        }
+        if (datePickerDataNascimento.getValue() == null) {
+            errorMessage += "Data inválida!\n";
+        }
+        if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Mostrando a mensagem de erro
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro no cadastro");
+            alert.setHeaderText("Campos inválidos, por favor, corrija...");
+            alert.setContentText(errorMessage);
+            alert.show();
+            return false;
+        }
+    }
     
 }

@@ -3,17 +3,19 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaacademia.controller.FXMLGraficosController">
    <children>
-      <BarChart layoutX="82.0" layoutY="54.0" prefHeight="325.0" prefWidth="452.0">
+      <BarChart fx:id="barChart" layoutX="82.0" layoutY="54.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="511.0" prefWidth="467.0" title="Agendamentos por Mes">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis fx:id="categoryAxis" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="numberAxis" side="LEFT" />
         </yAxis>
       </BarChart>
+      <ComboBox fx:id="comboBoxAnos" layoutX="225.0" layoutY="29.0" prefWidth="150.0" promptText="Selecionar ano" />
    </children>
 </AnchorPane>

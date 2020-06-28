@@ -7,36 +7,38 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="441.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="sistemaacademia.controller.FXMLAgendamentoController">
+<AnchorPane id="AnchorPane" prefHeight="606.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaacademia.controller.FXMLAgendamentoController">
    <children>
-      <TableView fx:id="tableViewTreinador" layoutX="37.0" layoutY="185.0" prefHeight="136.0" prefWidth="149.0">
+      <TableView fx:id="tableViewTreinador" layoutX="37.0" layoutY="185.0" prefHeight="145.0" prefWidth="149.0">
         <columns>
           <TableColumn fx:id="tableColumnTreinadorNome" prefWidth="147.0" text="Nome" />
         </columns>
       </TableView>
       <ComboBox fx:id="comboBoxClientes" layoutX="37.0" layoutY="50.0" prefWidth="150.0" promptText="Cliente" />
       <ComboBox fx:id="comboBoxHorario" layoutX="37.0" layoutY="122.0" prefHeight="25.0" prefWidth="149.0" promptText="Horario" />
-      <TextField fx:id="textFieldValor" layoutX="38.0" layoutY="360.0" />
+      <TextField fx:id="textFieldValor" layoutX="38.0" layoutY="517.0" />
       <Text layoutX="37.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecionar Cliente" />
-      <Text layoutX="38.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor" />
-      <Button layoutX="209.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleButtonCalcular" text="Calcular" />
+      <Text layoutX="43.0" layoutY="513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Valor" />
+      <Button layoutX="83.0" layoutY="555.0" mnemonicParsing="false" onAction="#handleButtonCalcular" text="Calcular" />
       <Text layoutX="37.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecionar Treinador" />
       <Text layoutX="37.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecionar Horario" />
-      <TableView fx:id="tableViewAgendamento" layoutX="296.0" layoutY="26.0" prefHeight="361.0" prefWidth="297.0">
+      <TableView fx:id="tableViewAgendamento" layoutX="237.0" layoutY="26.0" prefHeight="510.0" prefWidth="357.0">
         <columns>
           <TableColumn fx:id="tableViewAgendamentoCliente" prefWidth="75.0" text="Cliente" />
           <TableColumn fx:id="tableViewAgendamentoTreinador" prefWidth="75.0" text="Treinador" />
-            <TableColumn fx:id="tableViewAgendamentoData" prefWidth="75.0" text="Data" />
+            <TableColumn fx:id="tableViewAgendamentoData" prefWidth="68.0" text="Data" />
             <TableColumn fx:id="tableViewAgendamentoTime" prefWidth="75.0" text="Horario" />
+            <TableColumn fx:id="tableViewAgendamentoValor" prefWidth="63.0" text="Valor" />
         </columns>
       </TableView>
-      <TextField fx:id="textFieldCargaHoraria" layoutX="209.0" layoutY="296.0" prefHeight="25.0" prefWidth="58.0" />
-      <Text layoutX="202.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carga Horaria Disponivel" wrappingWidth="97.60546875" />
-      <Button layoutX="465.0" layoutY="402.0" mnemonicParsing="false" onAction="#handleButtonInserirAgendamento" text="Inserir Agendamento" />
-      <DatePicker fx:id="datePickerDataInicio" layoutX="203.0" layoutY="122.0" prefHeight="25.0" prefWidth="82.0" />
-      <Text layoutX="203.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecionar Data" />
+      <TextField fx:id="textFieldCargaHoraria" layoutX="37.0" layoutY="463.0" prefHeight="25.0" prefWidth="150.0" />
+      <Text layoutX="43.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carga Horaria Disponivel" wrappingWidth="138.60546875" />
+      <Button layoutX="458.0" layoutY="555.0" mnemonicParsing="false" onAction="#handleButtonInserirAgendamento" text="Inserir Agendamento" />
+      <DatePicker fx:id="datePickerDataInicio" layoutX="37.0" layoutY="359.0" prefHeight="25.0" prefWidth="149.0" />
+      <Text layoutX="36.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecionar Data" />
+      <Line endX="100.0" layoutX="118.0" layoutY="427.0" startX="-100.0" />
    </children>
 </AnchorPane>
