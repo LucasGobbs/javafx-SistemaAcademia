@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,12 +73,14 @@ public class TreinadorDAO {
         return false;
     }
     
-    public boolean checarCargaHoraria(Treinador treinador){
+    public boolean checarCargaHoraria(Treinador treinador, Date dataInicio, Date dataFim){
         //checa se o treinador tem carga horária disponível ou não
-        String sql = "SELECT * FROM agendamentos WHERE treinador_id=?";
+        String sql = "SELECT * FROM agendamentos WHERE treinador_id=? AND data_inicio BETWEEN ? AND ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, treinador.getId());
+            stmt.setDate(2, dataInicio);
+            stmt.setDate(3, dataFim);
             ResultSet resultado = stmt.executeQuery();
             int cont = 0;
             while (resultado.next()) {
