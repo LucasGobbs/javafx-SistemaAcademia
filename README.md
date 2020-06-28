@@ -55,3 +55,12 @@ Esta regra existe para que todos os treinadores possam ter uma media quantidade 
 ## Relatórios
 <img src="https://github.com/LucasGobbs/javafx-SistemaAcademia/blob/master/git_images/tela_relatorios.PNG"  width="400" height="350">
 
+## Para compilar
+ - Criar um banco de dados, e rodar o arquivo database_query.sql
+ - Mudar conteudo do arquivo DataBasePostgresql.java para:
+```java
+this.connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/dbSistemaAcademia", "postgres", "123");
+// mudar dbSistemaAcademia para o nome do banco
+// mudar postgres para o usuario do banco 
+// mudar 123 para a senha do usuario
+```
