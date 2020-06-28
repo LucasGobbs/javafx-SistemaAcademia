@@ -3,11 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/elian/Documents/NetBeansProjects/javafx-SistemaAcademia/src/sistemaacademia/database/DatabasePostgreSQL.java</file>
             <file>file:/C:/Users/elian/Documents/NetBeansProjects/javafx-SistemaAcademia/src/sistemaacademia/dao/TreinadorDAO.java</file>
             <file>file:/C:/Users/elian/Documents/NetBeansProjects/javafx-SistemaAcademia/src/sistemaacademia/dao/ClienteDAO.java</file>
             <file>file:/C:/Users/elian/Documents/NetBeansProjects/javafx-SistemaAcademia/src/sistemaacademia/dao/AgendamentoDAO.java</file>
             <file>file:/C:/Users/elian/Documents/NetBeansProjects/javafx-SistemaAcademia/src/sistemaacademia/model/Cliente.java</file>
+=======
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/SistemaAcademia.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/model/Agendamento.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/database/DatabasePostgreSQL.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/dao/TreinadorDAO.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/controller/FXMLRelatoriosController.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/dao/ClienteDAO.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/model/Cliente.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/controller/FXMLTelaPrincipalController.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/controller/FXMLAgendamentoController.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/model/Treinador.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/controller/FXMLCadastroClienteController.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/controller/FXMLGraficosController.java</file>
+            <file>file:/C:/Users/llcos_000/Desktop/Prova_Pasta/javafx-SistemaAcademia/src/sistemaacademia/dao/AgendamentoDAO.java</file>
+>>>>>>> 28fe5437e01f46853aa724ab0700bbee062e3100
         </group>
     </open-files>
 </project-private>

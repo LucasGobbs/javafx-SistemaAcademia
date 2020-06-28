@@ -109,7 +109,7 @@ public class FXMLAgendamentoController implements Initializable {
         textFieldValor.setText("");
     }
     public void calcularValor(){
-        float valor = treinadorDAO.getvalorPorMes(treinadorSelecionado);
+        float valor = treinadorDAO.getValorPorMes(treinadorSelecionado);
         textFieldValor.setText(String.format("%.2f reais",valor));
     }
     private void carregarComboBoxCliente(){
@@ -150,25 +150,24 @@ public class FXMLAgendamentoController implements Initializable {
         Date dataInicio = Date.valueOf(datePickerDataInicio.getValue());
         Time horario = new Time(parseHorario(),0,0);
         handleButtonCalcular();
-        float valor = treinadorDAO.getvalorPorMes(treinadorSelecionado);
+        float valor = treinadorDAO.getValorPorMes(treinadorSelecionado);
+        System.out.println("Alou");
         if(treinadorDAO.getCargaHoraria(treinadorSelecionado) > 0){
-            if(treinadorDAO.estaDisponivel(treinadorSelecionado, dataInicio, horario)){
+            if(!treinadorDAO.estaDisponivel(treinadorSelecionado, dataInicio, horario)){
                 Agendamento agendamento = new Agendamento(0,dataInicio,horario,treinadorSelecionado,clienteSelecionado,valor);
-                connection.setAutoCommit(false);
-                try{
-                    treinadorDAO.diminuirCargaHoraria(treinadorSelecionado, 1);
-                    agendamentoDAO.inserir(agendamento);
-                }catch(Exception e){ /// MUDAR PARA SQLException +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                    connection.rollback();
-
-                }
-                connection.setAutoCommit(true);
+                System.out.println(valor);
+                System.out.println(agendamento);
+                System.out.println(agendamentoDAO.inserir(agendamento));
+                    
+               
+               
             }else{
                 //botar erro de disponibilidade aki
+                System.out.println("Erro de disponibilidade");
             }
         } else {
             //Botar erro de carga horaria aki
-            
+            System.out.println("Erro de carga horaria");
         }
         
         calcularCargaHoraria(treinadorSelecionado);

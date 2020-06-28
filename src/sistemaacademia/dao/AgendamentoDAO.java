@@ -5,11 +5,13 @@
  */
 package sistemaacademia.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,7 +89,9 @@ public class AgendamentoDAO {
             stmt.setTime(2, agendamento.getHorario());
             stmt.setInt(3, agendamento.getTreinador().getId());
             stmt.setInt(4, agendamento.getCliente().getId());
-            stmt.setFloat(5, agendamento.getValor());
+            //stmt.setFloat(5, agendamento.getValor());
+            stmt.setBigDecimal(5,BigDecimal.valueOf(agendamento.getValor()));
+            
             stmt.execute();
             return true;
         } catch(SQLException ex) {
