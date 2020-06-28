@@ -78,4 +78,40 @@ public class AgendamentoDAO {
         }
         return retorno;
     }
+    
+    public boolean inserir(Agendamento agendamento){
+        String sql = "INSERT INTO agendamentos(data_inicio, horario, treinador_id, cliente_id, valor) VALUES (?,?,?,?,?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setDate(1, agendamento.getDataInicio());
+            stmt.setTime(2, agendamento.getHorario());
+            stmt.setInt(3, agendamento.getTreinador().getId());
+            stmt.setInt(4, agendamento.getCliente().getId());
+            stmt.setFloat(5, agendamento.getValor());
+            stmt.execute();
+            return true;
+        } catch(SQLException ex) {
+            Logger.getLogger(AgendamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public int agendamentosTreinador(Treinador treinador){
+        //retorna a quantidade de agendamentos de um treinador especifico
+        String sql = "SELECT * FROM agendamentos WHERE treinador_id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, treinador.getId());
+            ResultSet resultado = stmt.executeQuery();
+            int cont = 0;
+            while (resultado.next()) {
+                cont++;
+            }
+            return cont;
+        } catch(SQLException ex) {
+            Logger.getLogger(AgendamentoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+    
 }
