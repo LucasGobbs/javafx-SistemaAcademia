@@ -126,7 +126,7 @@ public class AgendamentoDAO {
 	"WHERE t.id = a.treinador_id "+
         "AND extract(year from a.data_inicio) = '%s' "+
 	"GROUP BY t.nome, mes; ", ano);
-        System.out.println(sql);
+     
         Map<String, ArrayList> retorno = new HashMap();
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
