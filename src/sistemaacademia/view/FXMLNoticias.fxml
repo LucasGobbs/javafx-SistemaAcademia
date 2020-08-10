@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="sistemaacademia.controller.FXMLNoticiasController">
+   <children>
+      <Label layoutX="250.0" layoutY="23.0" prefHeight="39.0" prefWidth="100.0" text="Noticias">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="103.0" layoutX="28.0" layoutY="129.0" stroke="BLACK" strokeType="INSIDE" width="544.0" />
+      <Text fx:id="textNoticia" layoutX="44.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="513.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

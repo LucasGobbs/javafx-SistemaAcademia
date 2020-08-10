@@ -30,6 +30,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleMenuItemRelatorios" text="Relatorios" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Threads e Sockets">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleNoticias" text="Noticias" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane fx:id="anchorPane" prefHeight="551.0" prefWidth="616.0" />
