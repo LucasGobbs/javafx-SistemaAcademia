@@ -4,6 +4,8 @@ Trabalho da matéria de Programação orientada a Objetos 2.
 Grupo: 
  - Lucas Costa Gobbi
  - Elian Lima Batista 
+# Primeira Parte
+
 ## Objetivo
 Criar um sistema com as tecnologias JavaFx, Postgresql
 ## Contexto
@@ -64,3 +66,18 @@ this.connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/dbSis
 // mudar postgres para o usuario do banco 
 // mudar 123 para a senha do usuario
 ```
+# Segunda parte (Threads e Sockets)
+## Objetivo
+Criar uma tela, que após utilizar sockets para pegar dados de um servidor as mostra em intervalos regulares de 3 segundos (Utilizando threads)
+## Detalhes
+Foram criadas duas classes
+- NoticiasController
+- NoticiasRunnable
+A classe NoticiassController, comunica com o servidor e recebe a lista de noticias List<String> e cria uma thread para a execução do NoticiasRunnable
+Já a classe NoticiasRunnable recebe a lista de noticias e a mostra na tela utilizando o Thread.Sleep(3000) para os intervalos
+ 
+## Imagem
+<img src="https://github.com/LucasGobbs/javafx-SistemaAcademia/blob/master/git_images/tela_noticias.PNG"  width="400" height="350">
+
+# Organização do Projeto
+Dividi o projeto em duas releases representando as duas fases do projeto
