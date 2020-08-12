@@ -18,25 +18,33 @@ import javafx.scene.text.Text;
 
 public class NoticiasRunnable implements Runnable {
 
-    Text label;
-    
+    Text text;
     List<String> noticias;
+    
+    
+    // Fazer as noticias ficarem repetindo 3 vezes na tela
+    int repetir_x = 3;
+    int repeticoes = 0;
+    
+    
     public NoticiasRunnable(Text j, List<String> noticias) {
-        label = j;
+        text = j;
         this.noticias = noticias;
     }
 
     @Override
     public void run() {
-        while(true){
+        while(repeticoes < repetir_x){
+           
             for(String noticia: this.noticias){
-                Platform.runLater(() -> label.setText(noticia));
+                Platform.runLater(() -> text.setText(noticia));
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(NoticiasRunnable.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            repeticoes++;
         }
         
     }

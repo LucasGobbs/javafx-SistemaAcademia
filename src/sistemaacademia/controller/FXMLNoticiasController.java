@@ -31,27 +31,23 @@ public class FXMLNoticiasController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    Text textNoticia;
+    private Text textNoticia;
     
-    NoticiasRunnable minhaThread1;
-
-    Thread t1;
+    private NoticiasRunnable threadNoticias;
+    private Socket socket;
+    private Thread thread1;
+    private List<String> listNoticia;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        textNoticia.setText("Teste TESte");
+        
         try {
-            Socket socket = new Socket("35.199.121.110",12345);
-            //DataInputStream mensagem = new DataInputStream(socket.getInputStream());
-            ObjectInputStream objeto = new ObjectInputStream(socket.getInputStream());
-            List<String> noticias = (List<String>) objeto.readObject();
-            for(String nt: noticias){
-                System.out.println(nt);
-            }
+            this.connect("35.199.121.110",12345);
+           
+            this.get_noticias();
+
+            this.start_runnable();
             
-            minhaThread1 = new NoticiasRunnable(textNoticia,noticias);
-            t1 = new Thread(minhaThread1, "Thread 1");
-            t1.start();
         } catch (IOException ex) {
             Logger.getLogger(FXMLNoticiasController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -59,5 +55,18 @@ public class FXMLNoticiasController implements Initializable {
         }
         
     }    
+    private void connect(String ip, int port) throws IOException{
+        this.socket = new Socket(ip,port);
+    }
     
+    private void get_noticias() throws IOException, ClassNotFoundException{
+        ObjectInputStream objeto = new ObjectInputStream(socket.getInputStream());
+        listNoticia = (List<String>) objeto.readObject();
+    }
+    
+    private void start_runnable(){
+        threadNoticias = new NoticiasRunnable(textNoticia,listNoticia);
+        thread1 = new Thread(threadNoticias, "Thread de Noticias");
+        thread1.start();
+    }
 }
