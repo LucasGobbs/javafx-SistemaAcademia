@@ -79,5 +79,12 @@ Já a classe NoticiasRunnable recebe a lista de noticias e a mostra na tela util
 ## Imagem
 <img src="https://github.com/LucasGobbs/javafx-SistemaAcademia/blob/master/git_images/tela_noticias.PNG"  width="400" height="350">
 
+# Terceira parte (WebServices)
+## Objetivo
+Criar uma tela, que faz um request em um webservice para receber um List<String> de noticias, e os mostra simultaneamente em um Label
+
+## Imagem
+<img src="https://github.com/LucasGobbs/javafx-SistemaAcademia/blob/master/git_images/tela_webservices.PNG"  width="400" height="350">
+
 # Organização do Projeto
 Dividi o projeto em duas releases representando as duas fases do projeto
