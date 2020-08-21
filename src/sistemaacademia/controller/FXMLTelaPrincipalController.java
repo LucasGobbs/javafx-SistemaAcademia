@@ -47,6 +47,10 @@ public class FXMLTelaPrincipalController implements Initializable {
         AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/sistemaacademia/view/FXMLNoticias.fxml"));
         anchorPane.getChildren().setAll(a);
     }
+    public void handleWebServices() throws IOException{
+        AnchorPane a = (AnchorPane) FXMLLoader.load(getClass().getResource("/sistemaacademia/view/FXMLWebServices.fxml"));
+        anchorPane.getChildren().setAll(a);
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

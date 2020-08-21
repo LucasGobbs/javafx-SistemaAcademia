@@ -8,17 +8,34 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="SistemaAcademia.jar" size="49262" download="eager" />
+    <jar href="SistemaAcademia.jar" size="51873" download="eager" />
+    <jar href="lib\aopalliance-repackaged-2.5.0-b32.jar" size="14768" download="eager" />
     <jar href="lib\asm-3.2.jar" size="43401" download="eager" />
     <jar href="lib\commons-beanutils-1.8.3.jar" size="232019" download="eager" />
     <jar href="lib\commons-collections-3.2.1.jar" size="575389" download="eager" />
     <jar href="lib\commons-digester-1.8.jar" size="143602" download="eager" />
     <jar href="lib\commons-logging-1.1.1.jar" size="60841" download="eager" />
     <jar href="lib\groovy-1.7.2.jar" size="4669426" download="eager" />
+    <jar href="lib\hk2-api-2.5.0-b32.jar" size="185793" download="eager" />
+    <jar href="lib\hk2-locator-2.5.0-b32.jar" size="187274" download="eager" />
+    <jar href="lib\hk2-utils-2.5.0-b32.jar" size="134908" download="eager" />
     <jar href="lib\iText-2.1.7.jar" size="1130070" download="eager" />
+    <jar href="lib\jackson-core-asl-1.9.11.jar" size="232131" download="eager" />
+    <jar href="lib\jackson-jaxrs-1.9.11.jar" size="18327" download="eager" />
+    <jar href="lib\jackson-mapper-asl-1.9.11.jar" size="780421" download="eager" />
+    <jar href="lib\jackson-xc-1.9.11.jar" size="27080" download="eager" />
     <jar href="lib\jasperreports-6.3.1.jar" size="5527829" download="eager" />
     <jar href="lib\jasperreports-fonts-6.3.1.jar" size="2478097" download="eager" />
     <jar href="lib\jasperreports-javaflow-6.3.1.jar" size="5588071" download="eager" />
+    <jar href="lib\javassist-3.20.0-GA.jar" size="750581" download="eager" />
+    <jar href="lib\javax.annotation-api-1.2.jar" size="26366" download="eager" />
+    <jar href="lib\javax.inject-2.5.0-b32.jar" size="5951" download="eager" />
+    <jar href="lib\javax.ws.rs-api-2.0.1.jar" size="115534" download="eager" />
+    <jar href="lib\jersey-client-2.25.1.jar" size="168997" download="eager" />
+    <jar href="lib\jersey-common-2.25.1.jar" size="715923" download="eager" />
+    <jar href="lib\jersey-guava-2.25.1.jar" size="971309" download="eager" />
+    <jar href="lib\jersey-media-json-jackson-2.3.1.jar" size="4931" download="eager" />
+    <jar href="lib\osgi-resource-locator-1.0.1.jar" size="20235" download="eager" />
     <jar href="lib\poi-3.6-20091214.jar" size="1539291" download="eager" />
     <jar href="lib\postgresql-42.2.12.jar" size="930498" download="eager" />
   </resources>

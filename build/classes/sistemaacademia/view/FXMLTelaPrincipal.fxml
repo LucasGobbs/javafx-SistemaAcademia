@@ -35,6 +35,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleNoticias" text="Noticias" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Web Services">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleWebServices" text="Noticias" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane fx:id="anchorPane" prefHeight="551.0" prefWidth="616.0" />
